@@ -250,3 +250,5 @@ def cmd_pull(args):
     # Dyson's VOC scale is 0-9 (integer). The API may return fractional values
     # (e.g., 0.5) but the display floors to 0-9. Match the display so values
     # look consistent, t
+if __name__ == "__main__":
+    cmd_login(None)
