@@ -1,0 +1,112 @@
+{
+  "_comment": "TEAM 2 — THE RULE BOOK. Real citations. Change only if you can point to the source.",
+  "air_quality_thresholds": {
+    "co2_ppm": {
+      "green_max": 800,
+      "yellow_max": 1200,
+      "unit": "ppm",
+      "source": "ASHRAE Standard 62.1-2022, Appendix D; outdoor CO2 ~420 ppm + 700 ppm differential",
+      "green_meaning": "Fresh air, good ventilation. Safe for all occupants.",
+      "yellow_meaning": "Slightly elevated. Increase ventilation; monitor.",
+      "red_meaning": "Poor air quality. Occupants may feel drowsy. Ventilate immediately."
+    },
+    "pm25_ugm3": {
+      "green_max": 12,
+      "yellow_max": 35.4,
+      "unit": "ug/m3",
+      "source": "EPA AQI breakpoints for PM2.5 (24-hour average), 40 CFR Part 58 Appendix G",
+      "green_meaning": "Good air quality. No particulate health risk.",
+      "yellow_meaning": "Moderate. Sensitive groups (asthma, heart disease) may be affected.",
+      "red_meaning": "Unhealthy. Keep windows CLOSED during smoke events.",
+      "smoke_warning": "During a wildfire smoke event, DO NOT open windows. Outdoor air is the problem."
+    },
+    "temperature_f": {
+      "green_min": 65,
+      "green_max": 80,
+      "yellow_min": 60,
+      "yellow_max": 88,
+      "unit": "F",
+      "source": "OSHA Technical Manual Section III Chapter 2; ASHRAE 55 comfort zone",
+      "green_meaning": "Comfortable temperature for most occupants.",
+      "yellow_meaning": "Outside comfort zone. Monitor elderly and children.",
+      "red_meaning": "Dangerous. Risk of heat stress or hypothermia."
+    },
+    "humidity_pct": {
+      "green_min": 30,
+      "green_max": 60,
+      "yellow_min": 20,
+      "yellow_max": 70,
+      "unit": "%RH",
+      "source": "ASHRAE Standard 55-2020 Thermal Environmental Conditions",
+      "green_meaning": "Comfortable humidity.",
+      "yellow_meaning": "Outside ideal range. Dry air irritates airways; high humidity encourages mold.",
+      "red_meaning": "Dangerous. Mold risk above 70%, respiratory irritation below 20%."
+    },
+    "voc_index": {
+      "green_max": 150,
+      "yellow_max": 350,
+      "unit": "index (0-500)",
+      "source": "Sensirion VOC Index whitepaper; baseline 100",
+      "green_meaning": "Normal air composition.",
+      "yellow_meaning": "Elevated VOCs. Check for cleaning products or off-gassing.",
+      "red_meaning": "High VOC levels. Ventilate and investigate source."
+    }
+  },
+  "beps_compliance": {
+    "_what_is_beps": "Montgomery County Building Energy Performance Standards — large buildings must cut energy use or pay fines.",
+    "building": {
+      "name": "Montgomery County Library",
+      "size_sqft": 104634,
+      "year_built": 2006,
+      "type": "Library",
+      "group": "Group 2 (50k-250k sqft)"
+    },
+    "energy_performance": {
+      "baseline_eui": 85.3,
+      "latest_eui": 73.2,
+      "target_eui": 59.7,
+      "unit": "kBtu/sf/year",
+      "gap": 13.5,
+      "reduction_pct": 18.4
+    },
+    "deadlines": {
+      "interim_standard_year": 2030,
+      "final_standard_year": 2034
+    },
+    "penalty": {
+      "fine_per_day": 500,
+      "fine_per_year": 182500,
+      "note": "Paid every year the building misses the target."
+    },
+    "phase1_fixes": {
+      "BAS-1": {"name": "Weekend Controls for AHU 3, 4, 5", "cost": 8000,  "annual_savings": 13600, "eui_impact": -3.2, "payback_years": 0.6},
+      "BAS-2": {"name": "Temperature Setback Optimization", "cost": 8000,  "annual_savings": 26584, "eui_impact": -9.9, "payback_years": 0.3},
+      "MECH-1":{"name": "Cooling Tower VFD Installation",   "cost": 30750, "annual_savings": 8101,  "eui_impact": -1.6, "payback_years": 3.8},
+      "combined_cost": 46750,
+      "combined_savings": 48285,
+      "combined_payback_years": 0.97
+    }
+  },
+  "drift_rules": {
+    "BAS-1_weekend_co2": {
+      "description": "AHU-3/4/5 should be OFF on weekends. 3rd-floor CO2 should approach outdoor baseline (~420 ppm).",
+      "applies_when": "building_status == 'closed'",
+      "expected_max_co2": 450,
+      "daily_waste_if_broken_usd": 37.26,
+      "fix_id": "BAS-1"
+    },
+    "BAS-2_setback": {
+      "description": "After 9pm temp should drift toward 67F. If it holds at 72F, setback isn't working.",
+      "applies_when": "hour >= 21 OR hour <= 5",
+      "expected_max_temp_after_hours_f": 70,
+      "daily_waste_if_broken_usd": 72.83,
+      "fix_id": "BAS-2"
+    }
+  },
+  "resilience_vulnerabilities": {
+    "no_backup_generator":     {"points_deducted": 20, "note": "Building goes dark in an outage."},
+    "r22_chillers":            {"points_deducted": 15, "note": "Refrigerant phased out — can't be recharged."},
+    "aging_ahus_1994":         {"points_deducted": 10, "note": "AHUs older than most of the staff."},
+    "no_air_purifiers":        {"points_deducted": 10, "note": "Nothing to scrub smoke if PM2.5 spikes."}
+  }
+}

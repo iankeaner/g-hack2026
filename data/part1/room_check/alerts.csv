@@ -1,0 +1,2 @@
+timestamp,source,building_status,overall_status,alert_full,co2_ppm,pm25_ugm3,temperature_f,humidity_pct,voc_index,drift_count,drift_summary,resilience_score,resilience_band
+2026-04-24T12:30:52,inkbird,open,GREEN,Air quality is good. The room is safe for all occupants. No action needed.,776.2,11.41,73.64,49.05,121.4,0,,45.0,AT RISK

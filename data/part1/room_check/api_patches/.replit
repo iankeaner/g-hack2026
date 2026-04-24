@@ -1,0 +1,72 @@
+# Replit config patch for GridHack 2026
+# Adds Python 3.11 + bleak (Inkbird BLE) on top of the existing Node/Postgres setup.
+# Drop in place of the repo root .replit file.
+
+modules = ["nodejs-24", "postgresql-16", "python-3.11"]
+
+[deployment]
+router = "application"
+deploymentTarget = "autoscale"
+
+[deployment.postBuild]
+args = ["pnpm", "store", "prune"]
+env = { "CI" = "true" }
+
+[workflows]
+runButton = "Project"
+
+# ── Python + Nix packages needed for the auto-grader and Inkbird driver ──
+[nix]
+channel = "stable-25_05"
+packages = [
+  "python311",
+  "python311Packages.pip",
+  "python311Packages.bleak",   # Inkbird BLE (cross-platform, falls back to sim)
+  "bluez",                     # Linux BLE stack — needed for real hardware scans
+]
+
+[env]
+PYTHON_BIN         = "python3"
+GRADER_PATH        = "${REPL_HOME}/room_check/grading/auto_grade.py"
+GRADER_CONFIG      = "${REPL_HOME}/room_check/thresholds.json"
+INKBIRD_SCRIPT     = "${REPL_HOME}/room_check/inkbird.py"
+# Flip to "0" once a real Inkbird is connected to force real BLE reads instead of the sim fallback.
+INKBIRD_SIMULATE   = "1"
+# Threshold (0-1) below which a failing submission auto-files a prompt_submission.
+AUTO_PROMPT_BELOW  = "0.3"
+
+[agent]
+stack = "PNPM_WORKSPACE"
+expertMode = true
+
+[postMerge]
+path = "scripts/post-merge.sh"
+timeoutMs = 20000
+
+[[ports]]
+localPort = 8080
+externalPort = 80
+
+[[ports]]
+localPort = 8081
+externalPort = 8081
+
+[[ports]]
+localPort = 8082
+externalPort = 3002
+
+[[ports]]
+localPort = 8083
+externalPort = 4200
+
+[[ports]]
+localPort = 23488
+externalPort = 3000
+
+[[ports]]
+localPort = 23489
+externalPort = 3001
+
+[[ports]]
+localPort = 23490
+externalPort = 3003

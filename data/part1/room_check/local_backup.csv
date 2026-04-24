@@ -1,0 +1,2 @@
+timestamp,building_status,co2_ppm,pm25_ugm3,temperature_f,humidity_pct,voc_index,overall_status,alert,resilience_score
+2026-04-24T12:30:52,open,776.2,11.41,73.64,49.05,121.4,GREEN,Air quality is good. The room is safe for all occupants. No action needed.,45.0
