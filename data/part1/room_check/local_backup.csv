@@ -1,2 +1,8 @@
 timestamp,building_status,co2_ppm,pm25_ugm3,temperature_f,humidity_pct,voc_index,overall_status,alert,resilience_score
 2026-04-24T12:30:52,open,776.2,11.41,73.64,49.05,121.4,GREEN,Air quality is good. The room is safe for all occupants. No action needed.,45.0
+2026-04-24T14:06:55,open,783.5,11.59,73.75,49.34,122.5,GREEN,Air quality is good. The room is safe for all occupants. No action needed.,45.0
+2026-04-24T14:07:52,open,773.5,11.34,73.6,48.94,121.0,GREEN,Air quality is good. The room is safe for all occupants. No action needed.,45.0
+2026-04-24T14:15:10,open,620,8.2,72.4,44,95,GREEN,Air quality is good. The room is safe for all occupants. No action needed.,45.0
+2026-04-24T14:15:16,open,620,8.2,72.4,44,95,GREEN,Air quality is good. The room is safe for all occupants. No action needed.,45.0
+2026-04-24T14:16:07,open,690,89.4,73.1,38,280,RED,URGENT: Air particulate levels are dangerous. Do NOT open windows — this may be a smoke event. Keep doors closed. Run any available air purifiers. Contact building management now.,31.0
+2026-04-24T14:16:37,open,1850,156.2,96.4,78,420,RED,URGENT: Dangerous air quality AND extreme heat. Do NOT open windows — outdoor air may contain smoke. Move occupants to an interior room with filtered air. Contact building management immediately.,0.0
